@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Object Detection Web App</title>
+  <script>
+    async function detectImage() {
+      const input = document.getElementById('imageInput').files[0];
+      const formData = new FormData();
+      formData.append('file', input);
+      
+      const response = await fetch("https://detect.roboflow.com/ponkan-synthetic-no-overlay-sg1kz/1?api_key=cTo3NAru0gydx39QbYct", {
+        method: "POST",
+        body: formData
+      });
+
+      const result = await response.json();
+      console.log(result);  // Process and display detection results.
+      document.getElementById('output').innerText = JSON.stringify(result, null, 2); // Display results.
+    }
+  </script>
+</head>
+<body>
+  <h1>Object Detection Web App</h1>
+  <input type="file" id="imageInput">
+  <button onclick="detectImage()">Detect Objects</button>
+  <pre id="output"></pre>
+</body>
+</html>
