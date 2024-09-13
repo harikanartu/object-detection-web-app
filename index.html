@@ -17,7 +17,24 @@
 
       const result = await response.json();
       console.log(result);  // Process and display detection results.
+      
+      // Process results
+      const detections = result.predictions; // Modify this according to your API's response structure.
+      const orangeCount = countOranges(detections);
+      
+      // Update the HTML
       document.getElementById('output').innerText = JSON.stringify(result, null, 2); // Display results.
+      document.getElementById('orange-count').innerText = `Number of oranges: ${orangeCount}`;
+    }
+
+    function countOranges(detections) {
+      let count = 0;
+      detections.forEach(detection => {
+        if (detection.class === 'orange') { // Replace 'orange' with the actual class name used in your model.
+          count++;
+        }
+      });
+      return count;
     }
   </script>
 </head>
@@ -26,5 +43,6 @@
   <input type="file" id="imageInput">
   <button onclick="detectImage()">Detect Objects</button>
   <pre id="output"></pre>
+  <div id="orange-count">Number of oranges: 0</div>
 </body>
 </html>
